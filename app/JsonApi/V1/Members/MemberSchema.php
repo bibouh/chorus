@@ -33,20 +33,20 @@ class MemberSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('memberCode')->sortable(),
-            Str::make('qrCode')->sortable(),
+            Str::make('member_code')->sortable(),
+            Str::make('qr_code')->sortable(),
             Str::make('name')->sortable(),
             Str::make('email')->sortable(),
             Str::make('phone'),
             Str::make('address'),
-            Str::make('voicePart')->sortable(),
-            DateTime::make('joinDate')->sortable(),
-            Boolean::make('isActive')->sortable(),
+            Str::make('voice_part')->sortable(),
+            DateTime::make('join_date')->sortable(),
+            Boolean::make('is_active')->sortable(),
             Str::make('notes'),
-            DateTime::make('createdAt')->sortable()->readOnly(),
-            DateTime::make('updatedAt')->sortable()->readOnly(),
+            DateTime::make('created_at')->sortable()->readOnly(),
+            DateTime::make('updated_at')->sortable()->readOnly(),
             HasMany::make('attendances')->readOnly(),
-            HasMany::make('qrCodeDistributions')->readOnly(),
+            HasMany::make('qr_code_distributions')->readOnly(),
         ];
     }
 

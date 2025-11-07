@@ -19,12 +19,11 @@ class EventRequest extends ResourceRequest
         return [
             'name' => ['required', 'string', 'min:3', 'max:255'],
             'description' => ['nullable', 'string'],
-            'eventType' => JsonApiRule::toOne(),
-            'eventTypeId' => ['required', 'exists:event_types,id'],
+            'event_type_id' => ['required', 'exists:event_types,id'],
             'date' => ['required', 'date', 'after_or_equal:today'],
-            'time' => ['required', 'date_format:H:i:s'],
-            'isRecurring' => ['boolean'],
-            'parentEvent' => JsonApiRule::toOne(),
+            'time' => ['required', 'date_format:H:i'],
+            'is_recurring' => ['boolean'],
+            'parent_event' => ['nullable', JsonApiRule::toOne()],
         ];
     }
 

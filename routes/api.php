@@ -5,10 +5,14 @@ use App\Http\Controllers\Api\V1\EventController;
 use App\Http\Controllers\Api\V1\EventTypeController;
 use App\Http\Controllers\Api\V1\MemberController;
 use App\Http\Controllers\Api\V1\UserController;
+use Illuminate\Support\Facades\Route;
 use LaravelJsonApi\Laravel\Facades\JsonApiRoute;
 use LaravelJsonApi\Laravel\Routing\ActionRegistrar;
 use LaravelJsonApi\Laravel\Routing\Relationships;
 use LaravelJsonApi\Laravel\Routing\ResourceRegistrar;
+
+// Custom authentication routes
+Route::post('/auth/login', [UserController::class, 'login']);
 
 JsonApiRoute::server('v1')
     ->resources(function (ResourceRegistrar $server) {

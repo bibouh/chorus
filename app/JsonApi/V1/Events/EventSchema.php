@@ -3,16 +3,17 @@
 namespace App\JsonApi\V1\Events;
 
 use App\Models\Event;
-use LaravelJsonApi\Eloquent\Contracts\Paginator;
-use LaravelJsonApi\Eloquent\Fields\DateTime;
+use LaravelJsonApi\Eloquent\Schema;
 use LaravelJsonApi\Eloquent\Fields\ID;
-use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Fields\Str;
 use LaravelJsonApi\Eloquent\Fields\Boolean;
+use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
+use LaravelJsonApi\Eloquent\Contracts\Paginator;
+use LaravelJsonApi\Eloquent\Fields\Number;
+use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
-use LaravelJsonApi\Eloquent\Schema;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 
 class EventSchema extends Schema
 {
@@ -35,17 +36,17 @@ class EventSchema extends Schema
             ID::make(),
             Str::make('name')->sortable(),
             Str::make('description'),
+            Number::make('event_type_id')->sortable(),
+            Number::make('created_by')->sortable(),
+            Number::make('parent_event_id')->sortable(),
             DateTime::make('date')->sortable(),
             DateTime::make('time')->sortable(),
-            Boolean::make('isRecurring')->sortable(),
-            DateTime::make('createdAt')->sortable()->readOnly(),
-            DateTime::make('updatedAt')->sortable()->readOnly(),
-            BelongsTo::make('eventType'),
-            BelongsTo::make('creator')->readOnly(),
-            BelongsTo::make('parentEvent')->readOnly(),
-            HasMany::make('childEvents')->readOnly(),
+            Boolean::make('is_recurring')->sortable(),
+            DateTime::make('created_at')->sortable()->readOnly(),
+            DateTime::make('updated_at')->sortable()->readOnly(),
+            HasMany::make('child_events')->readOnly(),
             HasMany::make('attendances')->readOnly(),
-            HasMany::make('recurringEventSchedules')->readOnly(),
+            HasMany::make('recurring_event_schedules')->readOnly(),
         ];
     }
 

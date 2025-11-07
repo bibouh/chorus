@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Event extends Model
 {
@@ -27,6 +28,20 @@ class Event extends Model
             'time' => 'datetime',
             'is_recurring' => 'boolean',
         ];
+    }
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($event) {
+            if (Auth::check() && !$event->created_by) {
+                $event->created_by = Auth::id();
+            }
+        });
     }
 
     /**

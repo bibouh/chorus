@@ -20,13 +20,13 @@ class MemberRequest extends ResourceRequest
         $memberId = $member ? $member->getKey() : null;
 
         return [
-            'memberCode' => [
+            'member_code' => [
                 'required',
                 'string',
                 'max:50',
                 Rule::unique('members', 'member_code')->ignore($memberId),
             ],
-            'qrCode' => [
+            'qr_code' => [
                 'required',
                 'string',
                 'max:100',
@@ -41,7 +41,7 @@ class MemberRequest extends ResourceRequest
             ],
             'phone' => ['required', 'string', 'max:50', 'regex:/^[0-9+\-\s()]+$/'],
             'address' => ['nullable', 'string'],
-            'voicePart' => [
+            'voice_part' => [
                 'required',
                 Rule::in([
                     'soprano',
@@ -54,8 +54,8 @@ class MemberRequest extends ResourceRequest
                     'bass_profundo'
                 ]),
             ],
-            'joinDate' => ['required', 'date', 'before_or_equal:today'],
-            'isActive' => ['boolean'],
+            'join_date' => ['required', 'date', 'before_or_equal:today'],
+            'is_active' => ['boolean'],
             'notes' => ['nullable', 'string'],
         ];
     }

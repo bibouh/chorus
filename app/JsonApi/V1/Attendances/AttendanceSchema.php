@@ -8,6 +8,7 @@ use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
 use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Fields\Str;
+use LaravelJsonApi\Eloquent\Filters\Where;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
@@ -32,11 +33,11 @@ class AttendanceSchema extends Schema
         return [
             ID::make(),
             Str::make('status')->sortable(),
-            DateTime::make('arrivalTime'),
-            DateTime::make('scannedAt')->sortable(),
+            DateTime::make('arrival_time'),
+            DateTime::make('scanned_at')->sortable(),
             Str::make('notes'),
-            DateTime::make('createdAt')->sortable()->readOnly(),
-            DateTime::make('updatedAt')->sortable()->readOnly(),
+            DateTime::make('created_at')->sortable()->readOnly(),
+            DateTime::make('updated_at')->sortable()->readOnly(),
             BelongsTo::make('event'),
             BelongsTo::make('member'),
             BelongsTo::make('recorder')->readOnly(),
@@ -52,6 +53,9 @@ class AttendanceSchema extends Schema
     {
         return [
             WhereIdIn::make($this),
+            Where::make('status', 'status'),
+            Where::make('event', 'event_id'),
+            Where::make('member', 'member_id'),
         ];
     }
 

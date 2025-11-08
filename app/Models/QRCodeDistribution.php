@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class QRCodeDistribution extends Model
 {
@@ -29,6 +30,20 @@ class QRCodeDistribution extends Model
             'include_qr_image' => 'boolean',
             'include_member_info' => 'boolean',
         ];
+    }
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($distribution) {
+            if (Auth::check() && !$distribution->sent_by) {
+                $distribution->sent_by = Auth::id();
+            }
+        });
     }
 
     /**

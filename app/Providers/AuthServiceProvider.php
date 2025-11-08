@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Models\Attendance;
 use App\Models\Event;
 use App\Models\EventType;
+use App\Models\EventTypeLateThreshold;
+use App\Models\LateDetectionSetting;
 use App\Models\Member;
 use App\Models\QRCodeDistribution;
 use App\Models\QRCodeGenerationHistory;
@@ -13,6 +15,8 @@ use App\Models\User;
 use App\Policies\AttendancePolicy;
 use App\Policies\EventPolicy;
 use App\Policies\EventTypePolicy;
+use App\Policies\EventTypeLateThresholdPolicy;
+use App\Policies\LateDetectionSettingPolicy;
 use App\Policies\MemberPolicy;
 use App\Policies\QRCodeDistributionPolicy;
 use App\Policies\QRCodeGenerationHistoryPolicy;
@@ -33,6 +37,8 @@ class AuthServiceProvider extends ServiceProvider
         Event::class => EventPolicy::class,
         Attendance::class => AttendancePolicy::class,
         EventType::class => EventTypePolicy::class,
+        EventTypeLateThreshold::class => EventTypeLateThresholdPolicy::class,
+        LateDetectionSetting::class => LateDetectionSettingPolicy::class,
         QRCodeDistribution::class => QRCodeDistributionPolicy::class,
         QRCodeGenerationHistory::class => QRCodeGenerationHistoryPolicy::class,
         RecurringEventSchedule::class => RecurringEventSchedulePolicy::class,

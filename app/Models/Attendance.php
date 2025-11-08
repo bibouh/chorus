@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Attendance extends Model
 {
@@ -25,6 +26,20 @@ class Attendance extends Model
             'arrival_time' => 'datetime',
             'scanned_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot(): void
+    {
+        parent::boot();
+
+        static::creating(function ($attendance) {
+            if (Auth::check() && !$attendance->recorded_by) {
+                $attendance->recorded_by = Auth::id();
+            }
+        });
     }
 
     /**

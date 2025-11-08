@@ -1,21 +1,18 @@
 <?php
 
-namespace App\JsonApi\V1\Members;
+namespace App\JsonApi\V1\EventTypeLateThresholds;
 
-use App\Models\Member;
+use App\Models\EventTypeLateThreshold;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasOne;
-use LaravelJsonApi\Eloquent\Fields\Str;
-use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\Number;
+use LaravelJsonApi\Eloquent\Fields\Relations\BelongsTo;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class MemberSchema extends Schema
+class EventTypeLateThresholdSchema extends Schema
 {
 
     /**
@@ -23,7 +20,7 @@ class MemberSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Member::class;
+    public static string $model = EventTypeLateThreshold::class;
 
     /**
      * Get the resource fields.
@@ -34,21 +31,10 @@ class MemberSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('member_code')->sortable(),
-            Str::make('qr_code')->sortable(),
-            Str::make('name')->sortable(),
-            Str::make('email')->sortable(),
-            Str::make('phone'),
-            Str::make('address'),
-            Str::make('voice_part')->sortable(),
-            DateTime::make('join_date')->sortable(),
-            Boolean::make('is_active')->sortable(),
-            Str::make('notes'),
-            Str::make('qr_code_image_url')->readOnly(),
+            Number::make('threshold_minutes')->sortable(),
             DateTime::make('created_at')->sortable()->readOnly(),
             DateTime::make('updated_at')->sortable()->readOnly(),
-            HasMany::make('attendances')->readOnly(),
-            HasMany::make('qr_code_distributions')->readOnly(),
+            BelongsTo::make('event_type'),
         ];
     }
 
@@ -75,4 +61,3 @@ class MemberSchema extends Schema
     }
 
 }
-

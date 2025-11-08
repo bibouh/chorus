@@ -17,20 +17,18 @@ class AttendanceRequest extends ResourceRequest
     public function rules(): array
     {
         return [
-            'event' => JsonApiRule::toOne(),
-            'eventId' => ['required', 'exists:events,id'],
-            'member' => JsonApiRule::toOne(),
-            'memberId' => ['required', 'exists:members,id'],
+            'event' => ['required', JsonApiRule::toOne()],
+            'member' => ['required', JsonApiRule::toOne()],
             'status' => [
                 'required',
                 Rule::in(['present', 'late', 'absent']),
             ],
-            'arrivalTime' => [
+            'arrival_time' => [
                 'nullable',
-                'date_format:H:i:s',
+                'date_format:H:i',
                 'required_if:status,present,late',
             ],
-            'scannedAt' => ['nullable', 'date'],
+            'scanned_at' => ['nullable', 'date'],
             'notes' => ['nullable', 'string'],
         ];
     }

@@ -38,6 +38,9 @@ class Server extends BaseServer
             Events\EventSchema::class,
             Attendances\AttendanceSchema::class,
             Users\UserSchema::class,
+            EventTypeLateThresholds\EventTypeLateThresholdSchema::class,
+            LateDetectionSettings\LateDetectionSettingSchema::class,
+            QRCodeDistributions\QRCodeDistributionSchema::class,
         ];
     }
 }

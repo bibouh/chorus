@@ -1,21 +1,18 @@
 <?php
 
-namespace App\JsonApi\V1\Members;
+namespace App\JsonApi\V1\LateDetectionSettings;
 
-use App\Models\Member;
+use App\Models\LateDetectionSetting;
 use LaravelJsonApi\Eloquent\Contracts\Paginator;
+use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\DateTime;
 use LaravelJsonApi\Eloquent\Fields\ID;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasMany;
-use LaravelJsonApi\Eloquent\Fields\Relations\HasOne;
-use LaravelJsonApi\Eloquent\Fields\Str;
-use LaravelJsonApi\Eloquent\Fields\Boolean;
 use LaravelJsonApi\Eloquent\Fields\Number;
 use LaravelJsonApi\Eloquent\Filters\WhereIdIn;
 use LaravelJsonApi\Eloquent\Pagination\PagePagination;
 use LaravelJsonApi\Eloquent\Schema;
 
-class MemberSchema extends Schema
+class LateDetectionSettingSchema extends Schema
 {
 
     /**
@@ -23,7 +20,7 @@ class MemberSchema extends Schema
      *
      * @var string
      */
-    public static string $model = Member::class;
+    public static string $model = LateDetectionSetting::class;
 
     /**
      * Get the resource fields.
@@ -34,21 +31,13 @@ class MemberSchema extends Schema
     {
         return [
             ID::make(),
-            Str::make('member_code')->sortable(),
-            Str::make('qr_code')->sortable(),
-            Str::make('name')->sortable(),
-            Str::make('email')->sortable(),
-            Str::make('phone'),
-            Str::make('address'),
-            Str::make('voice_part')->sortable(),
-            DateTime::make('join_date')->sortable(),
-            Boolean::make('is_active')->sortable(),
-            Str::make('notes'),
-            Str::make('qr_code_image_url')->readOnly(),
+            Boolean::make('is_enabled')->sortable(),
+            Number::make('default_threshold_minutes')->sortable(),
+            Boolean::make('auto_mark_late')->sortable(),
+            Boolean::make('send_notifications')->sortable(),
+            Boolean::make('use_different_thresholds_by_type')->sortable(),
             DateTime::make('created_at')->sortable()->readOnly(),
             DateTime::make('updated_at')->sortable()->readOnly(),
-            HasMany::make('attendances')->readOnly(),
-            HasMany::make('qr_code_distributions')->readOnly(),
         ];
     }
 
@@ -75,4 +64,3 @@ class MemberSchema extends Schema
     }
 
 }
-

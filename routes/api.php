@@ -3,7 +3,10 @@
 use App\Http\Controllers\Api\V1\AttendanceController;
 use App\Http\Controllers\Api\V1\EventController;
 use App\Http\Controllers\Api\V1\EventTypeController;
+use App\Http\Controllers\Api\V1\EventTypeLateThresholdController;
+use App\Http\Controllers\Api\V1\LateDetectionSettingController;
 use App\Http\Controllers\Api\V1\MemberController;
+use App\Http\Controllers\Api\V1\QRCodeDistributionController;
 use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Support\Facades\Route;
 use LaravelJsonApi\Laravel\Facades\JsonApiRoute;
@@ -15,11 +18,18 @@ use LaravelJsonApi\Laravel\Routing\ResourceRegistrar;
 Route::post('/auth/login', [UserController::class, 'login']);
 
 JsonApiRoute::server('v1')
+    ->prefix('v1')
     ->resources(function (ResourceRegistrar $server) {
         $server->resource('members', MemberController::class)
             ->relationships(function (Relationships $relationships) {
                 $relationships->hasMany('attendances')->readOnly();
-                $relationships->hasMany('qrCodeDistributions')->readOnly();
+             //   $relationships->hasMany('qrCodeDistributions')->readOnly();
+            });
+
+        $server->resource('q-r-code-distributions', QRCodeDistributionController::class)
+            ->relationships(function (Relationships $relationships) {
+                $relationships->hasOne('member');
+                $relationships->hasOne('sender')->readOnly();
             });
 
         $server->resource('event-types', EventTypeController::class)
@@ -28,14 +38,22 @@ JsonApiRoute::server('v1')
                 $relationships->hasOne('lateThreshold')->readOnly();
             });
 
+        $server->resource('event-type-late-thresholds', EventTypeLateThresholdController::class)
+            ->relationships(function (Relationships $relationships) {
+              //  $relationships->hasOne('eventType');
+            })->only('index', 'show', 'store', 'update');
+
+        $server->resource('late-detection-settings', LateDetectionSettingController::class)
+        ->only('index', 'show', 'store', 'update');
+
         $server->resource('events', EventController::class)
             ->relationships(function (Relationships $relationships) {
-                $relationships->hasOne('eventType');
-                $relationships->hasOne('creator')->readOnly();
-                $relationships->hasOne('parentEvent')->readOnly();
-                $relationships->hasMany('childEvents')->readOnly();
-                $relationships->hasMany('attendances')->readOnly();
-                $relationships->hasMany('recurringEventSchedules')->readOnly();
+                // $relationships->hasOne('eventType');
+                // $relationships->hasOne('creator')->readOnly();
+                // $relationships->hasOne('parentEvent')->readOnly();
+             //   $relationships->hasMany('childEvents')->readOnly();
+               // $relationships->hasMany('attendances')->readOnly();
+             //   $relationships->hasMany('recurringEventSchedules')->readOnly();
             });
 
         $server->resource('attendances', AttendanceController::class)

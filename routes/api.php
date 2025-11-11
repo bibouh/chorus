@@ -48,12 +48,12 @@ JsonApiRoute::server('v1')
 
         $server->resource('events', EventController::class)
             ->relationships(function (Relationships $relationships) {
-                // $relationships->hasOne('eventType');
-                // $relationships->hasOne('creator')->readOnly();
-                // $relationships->hasOne('parentEvent')->readOnly();
-             //   $relationships->hasMany('childEvents')->readOnly();
-               // $relationships->hasMany('attendances')->readOnly();
-             //   $relationships->hasMany('recurringEventSchedules')->readOnly();
+                $relationships->hasOne('eventType');
+                $relationships->hasOne('creator')->readOnly();
+               $relationships->hasOne('parentEvent')->readOnly();
+               $relationships->hasMany('childEvents')->readOnly();
+               $relationships->hasMany('attendances')->readOnly();
+            //    $relationships->hasMany('recurringEventSchedules')->readOnly();
             });
 
         $server->resource('attendances', AttendanceController::class)
@@ -61,6 +61,9 @@ JsonApiRoute::server('v1')
                 $relationships->hasOne('event');
                 $relationships->hasOne('member');
                 $relationships->hasOne('recorder')->readOnly();
+            })
+            ->actions( function (ActionRegistrar $actions) {
+                $actions->post('scan');
             });
 
         $server->resource('users', UserController::class)

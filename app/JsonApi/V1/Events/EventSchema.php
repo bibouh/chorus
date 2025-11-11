@@ -44,9 +44,12 @@ class EventSchema extends Schema
             Boolean::make('is_recurring')->sortable(),
             DateTime::make('created_at')->sortable()->readOnly(),
             DateTime::make('updated_at')->sortable()->readOnly(),
-            HasMany::make('child_events')->readOnly(),
+            BelongsTo::make('eventType'),
+            BelongsTo::make('creator')->readOnly(),
+            BelongsTo::make('parentEvent')->readOnly(),
+            HasMany::make('childEvents')->readOnly(),
             HasMany::make('attendances')->readOnly(),
-            HasMany::make('recurring_event_schedules')->readOnly(),
+            HasMany::make('recurringEventSchedules')->readOnly(),
         ];
     }
 

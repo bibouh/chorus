@@ -4,15 +4,11 @@ namespace App\JsonApi\V1\Members;
 
 use Illuminate\Validation\Rule;
 use LaravelJsonApi\Laravel\Http\Requests\ResourceRequest;
-use LaravelJsonApi\Validation\Rule as JsonApiRule;
 
 class MemberRequest extends ResourceRequest
 {
-
     /**
      * Get the validation rules for the resource.
-     *
-     * @return array
      */
     public function rules(): array
     {
@@ -39,25 +35,15 @@ class MemberRequest extends ResourceRequest
                 'max:255',
                 Rule::unique('members', 'email')->ignore($memberId),
             ],
-            'phone' => ['required', 'string', 'max:50', 'regex:/^[0-9+\-\s()]+$/'],
+            'phone' => ['required', 'string', 'max:50'],
             'address' => ['nullable', 'string'],
             'voice_part' => [
                 'required',
-                Rule::in([
-                    'soprano',
-                    'alto',
-                    'tenor',
-                    'bass',
-                    'contralto',
-                    'mezzo_soprano',
-                    'baritone',
-                    'bass_profundo'
-                ]),
+                'string',
             ],
             'join_date' => ['required', 'date', 'before_or_equal:today'],
             'is_active' => ['boolean'],
             'notes' => ['nullable', 'string'],
         ];
     }
-
 }

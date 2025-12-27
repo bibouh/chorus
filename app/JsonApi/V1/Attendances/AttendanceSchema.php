@@ -15,18 +15,13 @@ use LaravelJsonApi\Eloquent\Schema;
 
 class AttendanceSchema extends Schema
 {
-
     /**
      * The model the schema corresponds to.
-     *
-     * @var string
      */
     public static string $model = Attendance::class;
 
     /**
      * Get the resource fields.
-     *
-     * @return array
      */
     public function fields(): array
     {
@@ -46,27 +41,22 @@ class AttendanceSchema extends Schema
 
     /**
      * Get the resource filters.
-     *
-     * @return array
      */
     public function filters(): array
     {
         return [
             WhereIdIn::make($this),
             Where::make('status', 'status'),
-            Where::make('event', 'event_id'),
-            Where::make('member', 'member_id'),
+            Where::make('event_id'),
+            Where::make('member_id'),
         ];
     }
 
     /**
      * Get the resource paginator.
-     *
-     * @return Paginator|null
      */
     public function pagination(): ?Paginator
     {
         return PagePagination::make();
     }
-
 }

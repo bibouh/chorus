@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\EventType;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class EventTypeSeeder extends Seeder
 {
@@ -15,15 +13,14 @@ class EventTypeSeeder extends Seeder
     public function run(): void
     {
         $eventTypes = [
-            ['name' => 'Rehearsal', 'slug' => 'rehearsal', 'description' => 'Répétition'],
+            ['name' => 'Répétition ordinaire', 'slug' => 'repetition-ordinaire', 'description' => 'Répétition ordinaire'],
+            ['name' => 'Répétition extraordinaire', 'slug' => 'repetition-extraordinaire', 'description' => 'Répétition extraordinaire'],
+            ['name' => 'Répétition concert', 'slug' => 'repetition-concert', 'description' => 'Répétition concert'],
+            ['name' => 'Prière du vendredi', 'slug' => 'priere-du-vendredi', 'description' => 'Prière du vendredi'],
+            ['name' => 'Messe dimanche', 'slug' => 'messe-dimanche', 'description' => 'Messe dimanche'],
+            ['name' => 'Messe mariage', 'slug' => 'messe-mariage', 'description' => 'Messe mariage'],
+            ['name' => 'Autres messes', 'slug' => 'autres-messes', 'description' => 'Autres messes'],
             ['name' => 'Concert', 'slug' => 'concert', 'description' => 'Concert'],
-            ['name' => 'General Rehearsal', 'slug' => 'general-rehearsal', 'description' => 'Répétition générale'],
-            ['name' => 'Technical Rehearsal', 'slug' => 'technical-rehearsal', 'description' => 'Répétition technique'],
-            ['name' => 'Rehearsal with Soloists', 'slug' => 'rehearsal-with-soloists', 'description' => 'Répétition avec solistes'],
-            ['name' => 'Orchestra Rehearsal', 'slug' => 'orchestra-rehearsal', 'description' => 'Répétition d\'orchestre'],
-            ['name' => 'Gala Concert', 'slug' => 'gala-concert', 'description' => 'Concert de gala'],
-            ['name' => 'Charity Concert', 'slug' => 'charity-concert', 'description' => 'Concert de bienfaisance'],
-            ['name' => 'Other', 'slug' => 'other', 'description' => 'Autre'],
         ];
 
         foreach ($eventTypes as $eventType) {

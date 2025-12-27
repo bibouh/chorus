@@ -19,16 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone', 50);
             $table->text('address')->nullable();
-            $table->enum('voice_part', [
-                'soprano',
-                'alto',
-                'tenor',
-                'bass',
-                'contralto',
-                'mezzo_soprano',
-                'baritone',
-                'bass_profundo'
-            ]);
+            $table->string('voice_part');
             $table->date('join_date');
             $table->boolean('is_active')->default(true);
             $table->text('notes')->nullable();

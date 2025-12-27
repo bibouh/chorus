@@ -47,7 +47,7 @@ class MemberResource extends JsonApiResource
     {
         return [
             $this->relation('attendances'),
-         //   $this->relation('qrCodeDistributions'),
+            $this->relation('qrCodeDistributions'),
         ];
     }
 

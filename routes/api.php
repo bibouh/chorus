@@ -23,7 +23,7 @@ JsonApiRoute::server('v1')
         $server->resource('members', MemberController::class)
             ->relationships(function (Relationships $relationships) {
                 $relationships->hasMany('attendances')->readOnly();
-             //   $relationships->hasMany('qrCodeDistributions')->readOnly();
+              //  $relationships->hasMany('qrCodeDistributions')->readOnly();
             });
 
         $server->resource('q-r-code-distributions', QRCodeDistributionController::class)
@@ -40,8 +40,8 @@ JsonApiRoute::server('v1')
 
         $server->resource('event-type-late-thresholds', EventTypeLateThresholdController::class)
             ->relationships(function (Relationships $relationships) {
-              //  $relationships->hasOne('eventType');
-            })->only('index', 'show', 'store', 'update');
+                $relationships->hasOne('eventType');
+            });
 
         $server->resource('late-detection-settings', LateDetectionSettingController::class)
         ->only('index', 'show', 'store', 'update');

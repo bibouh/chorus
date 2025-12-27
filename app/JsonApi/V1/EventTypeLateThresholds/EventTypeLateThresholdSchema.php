@@ -14,34 +14,28 @@ use LaravelJsonApi\Eloquent\Schema;
 
 class EventTypeLateThresholdSchema extends Schema
 {
-
     /**
      * The model the schema corresponds to.
-     *
-     * @var string
      */
     public static string $model = EventTypeLateThreshold::class;
 
     /**
      * Get the resource fields.
-     *
-     * @return array
      */
     public function fields(): array
     {
         return [
             ID::make(),
+            Number::make('event_type_id'),
             Number::make('threshold_minutes')->sortable(),
             DateTime::make('created_at')->sortable()->readOnly(),
             DateTime::make('updated_at')->sortable()->readOnly(),
-            BelongsTo::make('event_type'),
+            BelongsTo::make('eventType'),
         ];
     }
 
     /**
      * Get the resource filters.
-     *
-     * @return array
      */
     public function filters(): array
     {
@@ -52,12 +46,9 @@ class EventTypeLateThresholdSchema extends Schema
 
     /**
      * Get the resource paginator.
-     *
-     * @return Paginator|null
      */
     public function pagination(): ?Paginator
     {
         return PagePagination::make();
     }
-
 }

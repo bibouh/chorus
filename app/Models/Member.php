@@ -49,7 +49,7 @@ class Member extends Model implements HasMedia
                     $member->generateAndStoreQRCode();
                 } catch (\Exception $e) {
                     // Log error but don't fail the creation
-                    Log::error('Failed to generate QR code for member ' . $member->id . ': ' . $e->getMessage());
+                    Log::error('Failed to generate QR code for member '.$member->id.': '.$e->getMessage());
                 }
             }
         });
@@ -68,17 +68,16 @@ class Member extends Model implements HasMedia
     /**
      * Generate and store QR code image in the qrcode collection.
      *
-     * @param string|null $data The data to encode in the QR code (defaults to member's qr_code)
-     * @param int $size Size of the QR code (default: 300)
-     * @param string $format Format of the QR code (png or svg, default: png)
-     * @return Media|null
+     * @param  string|null  $data  The data to encode in the QR code (defaults to member's qr_code)
+     * @param  int  $size  Size of the QR code (default: 300)
+     * @param  string  $format  Format of the QR code (png or svg, default: png)
      */
     public function generateAndStoreQRCode(?string $data = null, int $size = 300, string $format = 'png'): ?Media
     {
         // Use member's qr_code if no data provided
         $qrData = $data ?? $this->qr_code;
 
-        if (!$qrData) {
+        if (! $qrData) {
             return null;
         }
 
@@ -86,17 +85,19 @@ class Member extends Model implements HasMedia
         $this->clearMediaCollection('qrcode');
 
         // Create temporary file path
-        $tempPath = sys_get_temp_dir() . '/qrcode-' . $this->member_code . '-' . uniqid() . '.' . $format;
+        $tempPath = sys_get_temp_dir().'/qrcode-'.$this->member_code.'-'.uniqid().'.'.$format;
 
         // Generate QR code and save to temporary file
         QrCode::format($format)
+            ->margin(2)
+            ->errorCorrection('H')
             ->size($size)
             ->generate($qrData, $tempPath);
 
         // Store the QR code in the media collection
         $media = $this->addMedia($tempPath)
-            ->usingName('QR Code - ' . $this->name)
-            ->usingFileName('qrcode-' . $this->member_code . '.' . $format)
+            ->usingName('QR Code - '.$this->name)
+            ->usingFileName('qrcode-'.$this->member_code.'.'.$format)
             ->toMediaCollection('qrcode');
 
         // Clean up temporary file
@@ -109,8 +110,6 @@ class Member extends Model implements HasMedia
 
     /**
      * Get the QR code media.
-     *
-     * @return Media|null
      */
     public function getQRCodeMedia(): ?Media
     {
@@ -119,19 +118,16 @@ class Member extends Model implements HasMedia
 
     /**
      * Get the QR code URL.
-     *
-     * @return string|null
      */
     public function getQRCodeUrl(): ?string
     {
         $media = $this->getFirstMedia('qrcode');
+
         return $media ? $media->getUrl() : null;
     }
 
     /**
      * Get the QR code image URL attribute (for JSON:API).
-     *
-     * @return string|null
      */
     public function getQrCodeImageUrlAttribute(): ?string
     {
